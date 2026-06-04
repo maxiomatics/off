@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Off-Switch — Selling the Cure for Addiction · Principle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#00060f; --bg-2:#000f22; --panel:#01142e; --panel-2:#01193c; --panel-3:#012150;
+    --blue:#0161fc; --blue-2:#348efd; --cyan:#01beff;
+    --ink:#eaf1fb; --ink-soft:#a4b6d2; --ink-faint:#5f739a;
+    --line:rgba(120,160,220,.13); --line-2:rgba(120,160,220,.22);
+    --amber:#f5b13c; --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',-apple-system,sans-serif;font-weight:400;font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(110% 70% at 16% -4%, rgba(1,97,252,.16), transparent 55%),
+      radial-gradient(110% 70% at 88% 6%, rgba(1,190,255,.10), transparent 52%),
+      radial-gradient(140% 120% at 50% 116%, rgba(0,0,0,.7), transparent 60%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:
+      linear-gradient(rgba(120,160,220,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,160,220,.035) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 78%);
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 78%);
+  }
+  .wrap{position:relative;z-index:1}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  .seclabel{font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:1em}
+  .seclabel .n{color:var(--ink-faint)}
+  .seclabel::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  /* top bar */
+  .topbar{display:flex;justify-content:space-between;align-items:center;
+    padding:26px 28px;max-width:var(--maxw);margin:0 auto}
+  .brand{font-family:'Geist Mono',monospace;font-weight:600;letter-spacing:.3em;
+    text-transform:uppercase;font-size:14px;color:var(--ink)}
+  .topnav{display:none;gap:26px;font-family:'Geist Mono',monospace;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  @media(min-width:900px){.topnav{display:flex}}
+  .topnav a{color:inherit;text-decoration:none;transition:color .2s}
+  .topnav a:hover{color:var(--cyan)}
+  .pill{font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--bg);background:var(--cyan);padding:9px 16px;border-radius:3px;font-weight:600;
+    text-decoration:none;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+  .pill:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(1,190,255,.28)}
+
+  /* hero */
+  .hero{padding:64px 0 26px;text-align:center}
+  .eyebrow{font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-faint)}
+  .hero .eyebrow{margin-bottom:26px}
+  .hero .eyebrow span{color:var(--blue-2)}
+  h1{font-family:'Outfit',sans-serif;font-weight:600;
+    font-size:clamp(2.3rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.02em;
+    color:var(--ink);max-width:17ch;margin:0 auto}
+  h1 .grad{background:linear-gradient(100deg,var(--cyan),var(--blue-2) 60%,var(--blue));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .dek{max-width:66ch;margin:30px auto 0;font-size:1.18rem;color:var(--ink-soft);font-weight:300}
+  .hero .dek b{color:var(--ink);font-weight:500}
+  .byline{margin-top:30px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-faint)}
+  .byline b{color:var(--ink-soft)}
+
+  /* slash strip */
+  .slashes{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px;
+    margin:46px auto 0;max-width:var(--maxw);padding:0 28px;
+    font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .slashes .w{color:var(--ink-soft)}
+  .slashes .s{color:var(--blue);opacity:.6}
+  .slashes .hot{color:var(--cyan)}
+
+  /* sections */
+  section.block{padding:64px 0;scroll-margin-top:24px}
+  .h2{font-family:'Outfit',sans-serif;font-weight:500;
+    font-size:clamp(1.7rem,3.7vw,2.7rem);line-height:1.08;letter-spacing:-.014em;
+    color:var(--ink);margin:22px 0 0;max-width:22ch}
+  .lead{margin-top:18px;font-size:1.12rem;color:var(--ink-soft);max-width:64ch;font-weight:300}
+  .lead b{color:var(--ink);font-weight:500}
+  .lead.tall{margin-top:24px}
+
+  /* two-appetite compare */
+  .invgrid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:38px}
+  @media(min-width:760px){.invgrid{grid-template-columns:1fr 1fr;gap:0;
+    border:1px solid var(--line-2);border-radius:6px;overflow:hidden}}
+  .invcol{padding:26px 24px;background:var(--panel)}
+  .invcol.now{border:1px solid var(--line-2);border-radius:6px}
+  .invcol.next{border:1px solid var(--line-2);border-radius:6px}
+  @media(min-width:760px){.invcol{border:none;border-radius:0}
+    .invcol.now{border-right:1px solid var(--line-2)}}
+  .invcol .tag{font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.16em;
+    text-transform:uppercase;margin-bottom:14px}
+  .invcol.now .tag{color:var(--amber)}
+  .invcol.next .tag{color:var(--blue-2)}
+  .invcol .big{font-family:'Outfit',sans-serif;font-size:1.32rem;font-weight:500;color:var(--ink);
+    line-height:1.2;margin-bottom:6px}
+  .invcol .sub{font-size:14.5px;color:var(--ink-soft);font-weight:300}
+  .invcol ul{list-style:none;margin-top:18px;display:flex;flex-direction:column;gap:9px}
+  .invcol li{font-size:14.5px;color:var(--ink-soft);display:flex;gap:.6em;line-height:1.4}
+  .invcol li .m{flex:none;opacity:.85}
+  .invcol.now li .m{color:var(--amber)}
+  .invcol.next li .m{color:var(--blue-2)}
+
+  /* cascade */
+  .cascade{margin-top:34px;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;background:var(--panel)}
+  .casc-trigger{padding:22px 24px;background:linear-gradient(180deg,rgba(1,97,252,.14),transparent);
+    border-bottom:1px solid var(--line)}
+  .casc-trigger .k{font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+  .casc-trigger .t{font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:500;color:var(--ink)}
+  .casc-row{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:20px 24px;
+    border-bottom:1px solid var(--line);align-items:start}
+  .casc-row:last-child{border-bottom:none}
+  .casc-ord{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-faint);white-space:nowrap;padding-top:3px;min-width:88px}
+  .casc-ord b{display:block;color:var(--blue-2);font-size:22px;letter-spacing:0;line-height:1}
+  .casc-row p{font-size:15px;color:var(--ink-soft);font-weight:300}
+  .casc-row p b{color:var(--ink);font-weight:500}
+
+  /* chips */
+  .chip{font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 9px;border-radius:30px;border:1px solid var(--line-2);display:inline-flex;align-items:center;gap:.5em;white-space:nowrap}
+  .chip .dot{width:6px;height:6px;border-radius:50%}
+  .chip.fact{color:var(--cyan)} .chip.fact .dot{background:var(--cyan)}
+  .chip.stated{color:var(--blue-2)} .chip.stated .dot{background:var(--blue-2)}
+  .chip.hyp{color:var(--amber)} .chip.hyp .dot{background:var(--amber);box-shadow:0 0 0 2px rgba(245,177,60,.18)}
+
+  /* cards */
+  .cards{display:grid;grid-template-columns:1fr;gap:16px;margin-top:34px}
+  @media(min-width:760px){.cards{grid-template-columns:1fr 1fr}}
+  .card{border:1px solid var(--line-2);border-radius:8px;padding:26px 24px;background:var(--panel);
+    position:relative;transition:transform .25s,border-color .25s,background .25s}
+  .card:hover{transform:translateY(-3px);background:linear-gradient(165deg,rgba(1,97,252,.09),var(--panel) 65%)}
+  .card .num{font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--ink-faint)}
+  .card h3{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.34rem;color:var(--ink);margin:8px 0 4px;line-height:1.12}
+  .card .what{font-size:14.5px;color:var(--ink-soft);font-weight:300;margin-bottom:16px}
+  .card .meta{display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--line);padding-top:15px}
+  .card .meta .row{display:flex;gap:.7em;font-size:13.5px;color:var(--ink-soft);line-height:1.42;font-weight:300}
+  .card .meta .row .lab{font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-faint);flex:none;min-width:70px;padding-top:2px}
+  .card .meta .row.key{color:var(--ink)}
+  .card .meta .row.key .lab{color:var(--cyan)}
+  .card .meta .row b{color:var(--ink);font-weight:500}
+  .card .chiprow{margin-top:16px}
+
+  /* steps / honest rules */
+  .steps{margin-top:30px;display:grid;grid-template-columns:1fr;gap:14px}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:20px;padding:22px 24px;
+    border:1px solid var(--line-2);border-radius:8px;background:var(--panel);align-items:start}
+  .step .sn{font-family:'Geist Mono',monospace;font-size:13px;color:var(--cyan);
+    border:1px solid var(--line-2);border-radius:50%;width:40px;height:40px;display:flex;
+    align-items:center;justify-content:center;flex:none}
+  .step h4{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.12rem;color:var(--ink);margin-bottom:5px}
+  .step p{font-size:14.5px;color:var(--ink-soft);font-weight:300}
+  .step p b{color:var(--ink);font-weight:500}
+
+  /* legend */
+  .legend{margin-top:30px;border:1px solid var(--line-2);border-radius:8px;padding:26px 24px;
+    background:linear-gradient(165deg,rgba(1,190,255,.06),transparent 70%)}
+  .legend .row{display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+  .legend .row:last-child{border-bottom:none}
+  .legend .row p{font-size:14px;color:var(--ink-soft);font-weight:300}
+  .legend .row p b{color:var(--ink);font-weight:500}
+
+  /* callout */
+  .callout{margin-top:34px;border-left:2px solid var(--cyan);padding:6px 0 6px 22px;
+    font-family:'Outfit',sans-serif;font-weight:400;font-size:clamp(1.25rem,2.6vw,1.7rem);
+    line-height:1.3;color:var(--ink);letter-spacing:-.01em}
+  .callout b{color:var(--cyan);font-weight:600}
+
+  /* CTA + close */
+  .cta{max-width:var(--maxw);margin:30px auto 0;padding:60px 28px;text-align:center;border-top:1px solid var(--line)}
+  .cta h2{font-family:'Outfit',sans-serif;font-weight:500;font-size:clamp(1.7rem,4vw,2.6rem);
+    letter-spacing:-.015em;color:var(--ink);max-width:24ch;margin:0 auto 10px;line-height:1.1}
+  .cta p{color:var(--ink-soft);font-weight:300;max-width:58ch;margin:0 auto 26px}
+  .ctabtn{display:inline-flex;align-items:center;gap:.6em;font-family:'Geist Mono',monospace;
+    font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--bg);
+    background:var(--cyan);padding:14px 26px;border-radius:4px;font-weight:600;transition:transform .2s,box-shadow .2s}
+  .ctabtn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(1,190,255,.28)}
+  .ctabtn .arr{transition:transform .2s}.ctabtn:hover .arr{transform:translateX(4px)}
+  .fate{max-width:var(--maxw);margin:0 auto;padding:8px 28px 6px;text-align:center;
+    font-family:'Outfit',sans-serif;font-style:italic;font-weight:300;
+    font-size:clamp(1.3rem,3vw,1.9rem);color:var(--ink-soft);letter-spacing:-.01em}
+  .fate b{font-style:normal;color:var(--cyan);font-weight:500}
+  footer{max-width:var(--maxw);margin:40px auto 0;padding:28px;display:flex;flex-wrap:wrap;gap:8px 26px;
+    justify-content:center;border-top:1px solid var(--line);
+    font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  footer b{color:var(--ink)} footer .a{color:var(--cyan)}
+  .disc{max-width:78ch;margin:0 auto;padding:0 28px 60px;text-align:center;
+    font-size:12.5px;color:var(--ink-faint);font-weight:300;line-height:1.6}
+
+  .rise{opacity:0;transform:translateY(18px);animation:rise .85s cubic-bezier(.2,.7,.3,1) forwards}
+  .d1{animation-delay:.05s}.d2{animation-delay:.13s}.d3{animation-delay:.22s}
+  .d4{animation-delay:.32s}.d5{animation-delay:.44s}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">PRINCIPLE</div>
+    <nav class="topnav">
+      <a href="#appetites">Two Appetites</a><a href="#inversion">The Inversion</a><a href="#offswitch">The Off-Switch</a><a href="#honest">The Honest Part</a>
+    </nav>
+    <a class="pill" href="https://futureprinciple.com/">Test your strategy</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero container">
+    <div class="eyebrow rise d1">A Better World Model &nbsp;/&nbsp; Strategy Brief &nbsp;/&nbsp; <span>Philip&nbsp;Morris</span></div>
+    <h1 class="rise d2">Stop selling the on-switch. <span class="grad">Sell the off-switch.</span></h1>
+    <p class="dek rise d3">The last brief asked Philip Morris to profit from <em>ending</em> the use — and ran straight into human nature on both sides. People want a molecule that removes the craving, not a willpower program. Shareholders want a bigger cash cow, not a smaller halo. There is one pivot that feeds both appetites instead of fighting them: <b>stop selling the chemical that switches addiction on, and build the one that switches it off</b> — across every substance, not just nicotine.</p>
+    <div class="byline rise d4"><b>Principle</b> &nbsp;·&nbsp; Foresight Engine &nbsp;·&nbsp; San Francisco · 2026</div>
+  </header>
+
+  <div class="slashes rise d5">
+    <span class="w">Remove the wanting</span><span class="s">/</span>
+    <span class="w">Beat willpower</span><span class="s">/</span>
+    <span class="w">Outgrow nicotine</span><span class="s">/</span>
+    <span class="hot">Hold the antidote</span>
+  </div>
+
+  <!-- 01 TWO APPETITES -->
+  <section class="block container" id="appetites">
+    <div class="seclabel"><span class="n">[ 01 / 05 ]</span> Two Appetites</div>
+    <h2 class="h2">Two appetites you can’t lecture away.</h2>
+    <p class="lead">Behavior change is a beautiful idea that loses to biology. People do not want to want less — they want a way to stop wanting that asks nothing of their discipline, which is why a weekly injection out-sold a century of willpower advice in about three years. Philip Morris’s own shareholders run on the identical instinct: they will defend the cash cow forever unless something bigger and easier walks through the door. You cannot moralize either appetite into submission. You can only build the thing that satisfies both at once.</p>
+
+    <div class="invgrid">
+      <div class="invcol now">
+        <div class="tag">Demand-side nature</div>
+        <div class="big">People pick the pill, not the program.</div>
+        <div class="sub">A molecule that removes the craving will always out-sell a regimen that demands you resist it.</div>
+        <ul>
+          <li><span class="m">→</span>Willpower is the one product nobody wants to buy</li>
+          <li><span class="m">→</span>No incentive scheme beats “take this and forget it”</li>
+          <li><span class="m">→</span>Ozempic is the proof: the demand is rabid</li>
+        </ul>
+      </div>
+      <div class="invcol next">
+        <div class="tag">Supply-side nature</div>
+        <div class="big">Shareholders won’t vote to shrink.</div>
+        <div class="sub">They will defend the cash cow until a larger, easier market appears — then they stampede toward it.</div>
+        <ul>
+          <li><span class="m">→</span>A guilt-driven contraction never clears the board</li>
+          <li><span class="m">→</span>A bigger cash cow clears it overnight</li>
+          <li><span class="m">→</span>The pivot has to pay more than the poison</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">The off-switch is the only move that feeds both: a no-willpower magic shot for the user — and a category larger than nicotine ever was for the owner.</div>
+  </section>
+
+  <!-- 02 INVERSION -->
+  <section class="block container" id="inversion">
+    <div class="seclabel"><span class="n">[ 02 / 05 ]</span> The Inversion</div>
+    <h2 class="h2">Run the addiction map backwards.</h2>
+    <p class="lead">Here is what no one else can say about Philip Morris: it is the planet’s foremost reverse-engineer of the human reward circuit. A century of work went into a single question — how to make the dopamine system want something, and keep wanting it. That is the exact circuit that nicotine, alcohol, opioids, ultra-processed food and gambling all hijack. One mechanism, many markets. The audacious pivot is not to find a <em>cleaner</em> thing to sell into that circuit. It is to take the map Philip Morris drew to exploit it and run it in reverse — and build the off-switch.</p>
+
+    <p class="lead tall">This is why the prize is Ozempic-scale, not nicotine-scale. The off-switch doesn’t address a substance; it addresses the shared machinery underneath all of them — so the category it opens is the union of every compulsion market at once. The early proof is already on the table: GLP-1 drugs, built for diabetes, turned out to quiet craving across food, alcohol and nicotine, and analysts now put that one accidental off-switch on a path toward roughly <b>$100 billion a year by the early 2030s</b>. Philip Morris is positioned to build the deliberate ones.</p>
+
+    <p class="lead tall">And it holds an asset no pharmaceutical company has: the demand-side intelligence. Decades of data on how craving is created, sustained, and — most valuable of all — exactly how and when people relapse. Pointed forward, <b>the relapse engine that kept people hooked becomes a relapse-prediction engine that keeps them free.</b></p>
+  </section>
+
+  <!-- 03 THE OFF-SWITCH -->
+  <section class="block container" id="offswitch">
+    <div class="seclabel"><span class="n">[ 03 / 05 ]</span> The Off-Switch</div>
+    <h2 class="h2">Four ways to switch addiction off.</h2>
+    <p class="lead">Three already work in humans for some substance; the fourth is how Philip Morris would discover the rest. Each card names why it beats willpower, the market it opens, the precedent under it, the confidence we’d assign — and the trap an adversarial simulation has to catch before a cent is committed.</p>
+
+    <div class="cards">
+
+      <!-- 01 -->
+      <div class="card">
+        <div class="num">01</div>
+        <h3>The Molecular Firewall</h3>
+        <div class="what">A vaccine — or a long-acting antibody — that binds the drug in the bloodstream so it never reaches the brain. The hit simply doesn’t arrive. A single long-acting shot, and the reward is gone.</div>
+        <div class="meta">
+          <div class="row key"><span class="lab">Demand</span><span>Set-and-forget. It removes the buzz without asking the person to resist it.</span></div>
+          <div class="row"><span class="lab">Market</span><span>Relapse prevention for people trying to quit — nicotine, opioids, cocaine, meth — then the firewall logic extends drug by drug.</span></div>
+          <div class="row"><span class="lab">Precedent</span><span>The nicotine vaccine NicVAX failed Phase III — but on antibody consistency, not mechanism: the third of patients who mounted strong titers roughly doubled their quit rate. Fentanyl and opioid vaccines, and long-acting antibodies, have now reached first-in-human trials — the University of Houston’s fentanyl vaccine entered Phase I in 2026.</span></div>
+          <div class="row"><span class="lab">Trap</span><span>It blocks the reward, not the harm — and a determined user can try to override it with bigger doses, which is dangerous. Pair it with cessation, never with permission to keep using.</span></div>
+        </div>
+        <div class="chiprow"><span class="chip hyp"><span class="dot"></span>Hypothesis · mechanism shown, delivery unsolved</span></div>
+      </div>
+
+      <!-- 02 -->
+      <div class="card">
+        <div class="num">02</div>
+        <h3>The Reward Dial</h3>
+        <div class="what">The “Ozempic for addiction.” A class of drugs that turns down the dopamine reward response itself — dampening craving across substances and compulsions at once, rather than blocking a single molecule.</div>
+        <div class="meta">
+          <div class="row key"><span class="lab">Demand</span><span>It is the magic pill people are already lining up for by the millions. Proven appetite is the one thing this category is not short of.</span></div>
+          <div class="row"><span class="lab">Market</span><span>The broadest of all — obesity, alcohol, nicotine and behavioral compulsions share the circuit it acts on. This is the bigger-cash-cow column, made literal.</span></div>
+          <div class="row"><span class="lab">Precedent</span><span>Real anti-craving signals across alcohol and nicotine (exenatide cut craving in trials; semaglutide shows it in real-world data); dedicated Phase 2 cessation trials read out around 2027. Researchers call the class the first true “anti-consumption” agents.</span></div>
+          <div class="row"><span class="lab">Trap</span><span>It is maintenance, not cure — a forever-pill for many. Commercially fine; just don’t sell it as an ending it isn’t.</span></div>
+        </div>
+        <div class="chiprow"><span class="chip stated"><span class="dot"></span>Stated · signals, not yet proof</span></div>
+      </div>
+
+      <!-- 03 -->
+      <div class="card">
+        <div class="num">03</div>
+        <h3>The Blocker Depot</h3>
+        <div class="what">A long-acting injection that occupies the reward receptors so the substance can’t activate them. Use it and nothing happens — the high has nowhere to land. Already real.</div>
+        <div class="meta">
+          <div class="row key"><span class="lab">Demand</span><span>A monthly shot built specifically to beat the adherence problem — you can’t “forget your willpower” when the protection lasts thirty days.</span></div>
+          <div class="row"><span class="lab">Market</span><span>Proven in opioids and alcohol; the open build is the nicotine and poly-substance analogue Philip Morris’s delivery science is suited to.</span></div>
+          <div class="row"><span class="lab">Precedent</span><span>Extended-release naltrexone (Vivitrol) is FDA-approved — a monthly injection that blocks the euphoria of both opioids and alcohol by shutting the reward pathway, and profits precisely by ending the use.</span></div>
+          <div class="row"><span class="lab">Trap</span><span>People stop taking the thing that removes their pleasure, and the blockade is “surmountable” with dangerous doses. Depot delivery and the right starting population are the answer.</span></div>
+        </div>
+        <div class="chiprow"><span class="chip fact"><span class="dot"></span>Fact · approved for opioids &amp; alcohol</span></div>
+      </div>
+
+      <!-- 04 -->
+      <div class="card">
+        <div class="num">04</div>
+        <h3>The Discovery Engine</h3>
+        <div class="what">Fund an independent frontier-bio-AI lab whose entire mission is the off-switch — generative molecular and receptor design aimed at higher-titer firewalls, cleaner reward dials and longer-lasting blockers, trained against data only Philip Morris holds.</div>
+        <div class="meta">
+          <div class="row key"><span class="lab">Demand</span><span>It is how every other card on this page gets better — and how the off-switch reaches substances no one has cracked yet.</span></div>
+          <div class="row"><span class="lab">Market</span><span>Whatever the circuit will give up. The moat is the data: a century of demand-side addiction intelligence, fused with frontier protein and chemistry models.</span></div>
+          <div class="row"><span class="lab">Precedent</span><span>The three cards above prove the targets are real; what’s been missing is a discovery effort with patient capital, deep delivery science and addiction data under one roof — a gap a tobacco balance sheet can uniquely fill.</span></div>
+          <div class="row"><span class="lab">Trap</span><span>Frontier bio is dual-use and the redemption is not automatic. It must run under the same biosecurity oversight and independent governance as any serious drug developer — never as a captive lab.</span></div>
+        </div>
+        <div class="chiprow"><span class="chip hyp"><span class="dot"></span>Hypothesis · frontier, governed</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 04 CASCADE -->
+  <section class="block container" id="forward">
+    <div class="seclabel"><span class="n">[ 04 / 05 ]</span> What Happens When…</div>
+    <h2 class="h2">The reframe, run forward.</h2>
+    <p class="lead">This is what the Foresight Engine does to a strategy: it follows the second- and third-order effects until the incentive structure either holds or breaks. Take the whole pivot as one move and watch where it lands.</p>
+
+    <div class="cascade">
+      <div class="casc-trigger">
+        <div class="k">Trigger</div>
+        <div class="t">Philip Morris stops calling itself the world’s nicotine company and starts building the world’s anti-addiction company.</div>
+      </div>
+      <div class="casc-row">
+        <div class="casc-ord">First order<b>1°</b></div>
+        <p>It steps out of one shrinking market and into the union of every compulsion market — anchored by a GLP-1 category already on a path toward <b>$100 billion a year.</b> The supply-side appetite is fed without a guilt-driven contraction: this is a bigger cash cow, not a smaller halo.</p>
+      </div>
+      <div class="casc-row">
+        <div class="casc-ord">Second order<b>2°</b></div>
+        <p>The off-switch cannibalizes nicotine demand — but the loss is dwarfed by the category it opens, so capital migrates off combustibles on its own. <b>The cash-cow problem doesn’t have to be won by moral argument; it dissolves</b> the moment a larger, easier market is on the table.</p>
+      </div>
+      <div class="casc-row">
+        <div class="casc-ord">Third order<b>3°</b></div>
+        <p>Philip Morris ends up holding both the on-switch and the off-switch to human craving. That is the protagonist arc and the danger in one fact: the same reverse-engineering that built the addiction is what makes the cure possible — which is <b>exactly why it has to be licensed, overseen and firewalled.</b> The simulation’s job is to find the governance that lets the upside exist without minting a new monopoly over desire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 HONEST -->
+  <section class="block container" id="honest">
+    <div class="seclabel"><span class="n">[ 05 / 05 ]</span> The Honest Part</div>
+    <h2 class="h2">The off-switch is not a harm-switch.</h2>
+    <p class="lead">Switching off the reward does not switch off the damage. A smoker whose buzz is gone but who keeps lighting up out of habit still inhales the tar. An off-switch sold as a licence to indulge — “use all you want, just take the shot” — re-creates the harm and the hypocrisy, and it is the first thing an adversarial model surfaces. So the rules around the molecules matter more than the molecules.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="sn">01</div>
+        <div>
+          <h4>The firewall rule.</h4>
+          <p>The same company <b>cannot sell the on-switch and the off-switch to the same person.</b> It is the direct analogue of “clean nicotine for the rich, cigarettes for the poor” from the essay — and it has to be a contractual, audited boundary, not a marketing promise.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn">02</div>
+        <div>
+          <h4>The demand paradox.</h4>
+          <p>People who don’t want to quit will not buy an off-switch — a product that asks someone to surrender a reward they still enjoy carries a built-in adoption ceiling. <b>So sequence the markets where the appetite already exists:</b> people who want out but can’t, and the compulsions no one defends — opioid use disorder, problem gambling, obesity — long before anything aimed at the smoker who is happy smoking.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn">03</div>
+        <div>
+          <h4>Governance is the licence to operate.</h4>
+          <p>A century-long addiction profiteer holding the master off-switch to human craving is a concentration-of-power question; frontier bio is a biosecurity one. <b>Independent oversight isn’t a constraint on this pivot — it’s the only thing that makes it credible.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="row"><span class="chip fact"><span class="dot"></span>Fact</span><p>Approved and working in humans for some substance today. <b>The antagonist depot.</b> The question is the new build, not the biology.</p></div>
+      <div class="row"><span class="chip stated"><span class="dot"></span>Stated</span><p>Real signals, established direction, not yet proven for the target. <b>The reward dial.</b> The cessation read-outs land around 2027.</p></div>
+      <div class="row"><span class="chip hyp"><span class="dot"></span>Hypothesis</span><p>Plausible, mechanism-backed, unproven at delivery or scale. <b>The molecular firewall and the discovery engine.</b> High upside, real risk — simulate before you build.</p></div>
+    </div>
+
+    <div class="callout">We will build the mirror, not the stone. We can price these futures, surface the traps three moves deep, and show which version survives contact with regulators, scientists and the public. We cannot make Philip Morris choose to switch the thing off. <b>That part was always the point.</b></div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Find out which off-switch survives before you build one.</h2>
+    <p>Four modalities, one firewall rule, and the adversarial reality each has to outlast. Principle simulates the regulators, the scientists, the shareholders and the public — and shows you which version of the anti-addiction company is not only the boldest, but the durable one.</p>
+    <a class="ctabtn" href="https://futureprinciple.com/">Stress-test the off-switch <span class="arr">→</span></a>
+  </div>
+
+  <div class="fate">There is no fate but <b>what we make.</b></div>
+
+  <footer>
+    <div><b>Principle</b> · A Better World Model</div>
+    <div class="a">futureprinciple.com</div>
+    <div>San Francisco · 2026</div>
+  </footer>
+
+  <p class="disc">Companion to the essay “Philip Morris Has Spent Decades Designing Its Future” and the outcome-economy brief. A strategic-ideation artifact — not investment, legal or medical advice, and not a recommendation to take any medication. The therapies referenced sit at widely different stages, from FDA-approved to early hypothesis; addiction-blocking biology and any frontier-bio-AI work belong under the same safety, ethics and biosecurity oversight as any drug developer. Every path here depends on switching the harmful product off — not on licensing its continued use.</p>
+
+</div>
+</body>
+</html>
